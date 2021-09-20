@@ -33,7 +33,7 @@ public class AuthorController {
 
     @PostMapping
     public AuthorDTO createRecord(@RequestBody AuthorDTO authorDTO) {
-        return authorService.createRecord(authorDTO);
+        return authorService.saveRecord(authorDTO);
     }
 
     @PutMapping

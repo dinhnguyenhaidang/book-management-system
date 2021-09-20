@@ -53,7 +53,7 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public BookDTO createRecord(BookDTO bookDTO) {
+    public BookDTO saveRecord(BookDTO bookDTO) {
         // Convert bookDTO to an entity and assign it to bookEntity
         BookEntity bookEntity = bookConverter.toEntity(bookDTO);
 
@@ -62,7 +62,7 @@ public class BookService implements IBookService {
             List<AuthorEntity> authorEntities = authorRepository.findAllById(bookDTO.getAuthorIds());
             bookEntity.setAuthors(authorEntities);
         } catch (Exception ex) {
-            bookEntity.setAuthors(null);
+            bookEntity.setAuthors(new ArrayList<>());
         }
 
         // Save the entity
@@ -84,7 +84,7 @@ public class BookService implements IBookService {
             List<AuthorEntity> authorEntities = authorRepository.findAllById(bookDTO.getAuthorIds());
             bookEntity.setAuthors(authorEntities);
         } catch (Exception ex) {
-            bookEntity.setAuthors(null);
+            bookEntity.setAuthors(new ArrayList<>());
         }
 
         // Save the entity

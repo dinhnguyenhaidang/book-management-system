@@ -33,7 +33,7 @@ public class BookController {
 
     @PostMapping
     public BookDTO createRecord(@RequestBody BookDTO bookDTO) {
-        return bookService.createRecord(bookDTO);
+        return bookService.saveRecord(bookDTO);
     }
 
     @PutMapping

@@ -17,7 +17,7 @@ public interface IAuthorService {
 
     AuthorDTO getRecordById(long authorId);
 
-    AuthorDTO createRecord(AuthorDTO authorDTO);
+    AuthorDTO saveRecord(AuthorDTO authorDTO);
 
     AuthorDTO updateRecord(AuthorDTO authorDTO);
 

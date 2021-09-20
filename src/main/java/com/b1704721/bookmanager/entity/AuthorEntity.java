@@ -42,7 +42,7 @@ public class AuthorEntity extends AbstractEntity {
         this.books = books;
     }
 
-    public void addTo(BookEntity bookEntity) {
+    public void addBook(BookEntity bookEntity) {
         this.books.add(bookEntity);
         bookEntity.getAuthors().add(this);
     }

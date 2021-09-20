@@ -17,7 +17,7 @@ public interface IBookService {
 
     BookDTO getRecordById(long bookId);
 
-    BookDTO createRecord(BookDTO bookDTO);
+    BookDTO saveRecord(BookDTO bookDTO);
 
     BookDTO updateRecord(BookDTO bookDTO);
 

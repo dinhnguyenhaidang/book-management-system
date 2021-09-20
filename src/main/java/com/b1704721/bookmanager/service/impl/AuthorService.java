@@ -53,16 +53,18 @@ public class AuthorService implements IAuthorService {
     }
 
     @Override
-    public AuthorDTO createRecord(AuthorDTO authorDTO) {
-        // Convert authorDTO to an entity and assign it to authorEntity
+    public AuthorDTO saveRecord(AuthorDTO authorDTO) {
+        // Convert authorDTO to authorEntity
         AuthorEntity authorEntity = authorConverter.toEntity(authorDTO);
 
-        // Get books having provided ids
+        // Update books of the author
         try {
             List<BookEntity> bookEntities = bookRepository.findAllById(authorDTO.getBookIds());
-            authorEntity.setBooks(bookEntities);
+            for (BookEntity bookEntity : bookEntities) {
+                authorEntity.addBook(bookEntity);
+            }
         } catch (Exception ex) {
-            authorEntity.setBooks(null);
+            authorEntity.setBooks(new ArrayList<>());
         }
 
         // Save the entity
@@ -83,19 +85,18 @@ public class AuthorService implements IAuthorService {
         }
         authorEntity.setBooks(new ArrayList<>());
 
-        // Convert authorDTO to an entity and update it
+        // Get updated data from authorDTO
         authorEntity = authorConverter.toEntity(authorDTO);
 
-        // Get books having provided ids
+        // Update books of the author
         try {
             List<BookEntity> bookEntities = bookRepository.findAllById(authorDTO.getBookIds());
-            // Add new books
             for (BookEntity songEntity : bookEntities) {
-                authorEntity.addTo(songEntity);
+                authorEntity.addBook(songEntity);
                 bookRepository.save(songEntity);
             }
         } catch (Exception ex) {
-            authorEntity.setBooks(null);
+            authorEntity.setBooks(new ArrayList<>());
         }
 
         // Save the entity
