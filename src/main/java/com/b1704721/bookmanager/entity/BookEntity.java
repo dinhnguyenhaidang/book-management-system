@@ -2,9 +2,7 @@ package com.b1704721.bookmanager.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Defines book entity, its relationships and maps it to the corresponding table in database
@@ -21,8 +19,8 @@ public class BookEntity extends AbstractEntity {
     private String title;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinTable(name = "book_author", joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id"))
+    @JoinTable(name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<AuthorEntity> authors = new ArrayList<>();
 
     public String getTitle() {

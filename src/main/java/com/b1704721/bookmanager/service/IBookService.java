@@ -13,8 +13,6 @@ import java.util.List;
  */
 public interface IBookService {
 
-    List<BookDTO> getAllRecords();
-
     BookDTO getRecordById(long bookId);
 
     BookDTO saveRecord(BookDTO bookDTO);

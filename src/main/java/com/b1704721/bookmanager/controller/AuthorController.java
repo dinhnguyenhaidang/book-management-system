@@ -15,16 +15,11 @@ import java.util.List;
  * @since 16-Sep-2021
  */
 @RestController
-@RequestMapping(value = "/author")
+@RequestMapping(value = "/authors")
 public class AuthorController {
 
     @Autowired
     private IAuthorService authorService;
-
-    @GetMapping
-    public List<AuthorDTO> getAllRecords() {
-        return authorService.getAllRecords();
-    }
 
     @GetMapping(value = "{authorId}")
     public AuthorDTO getRecordById(@PathVariable(value = "authorId") Long authorId) {

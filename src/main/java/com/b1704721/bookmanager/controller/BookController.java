@@ -15,16 +15,11 @@ import java.util.List;
  * @since 16-Sep-2021
  */
 @RestController
-@RequestMapping(value = "/book")
+@RequestMapping(value = "/books")
 public class BookController {
 
     @Autowired
     private IBookService bookService;
-
-    @GetMapping
-    public List<BookDTO> getAllRecords() {
-        return bookService.getAllRecords();
-    }
 
     @GetMapping(value = "{bookId}")
     public BookDTO getRecordById(@PathVariable(value = "bookId") Long bookId) {

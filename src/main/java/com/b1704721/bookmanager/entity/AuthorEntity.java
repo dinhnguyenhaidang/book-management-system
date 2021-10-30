@@ -5,9 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Defines author entity, its relationships and maps it to the corresponding table in database
@@ -20,7 +18,7 @@ import java.util.Set;
 @Table(name = "author")
 public class AuthorEntity extends AbstractEntity {
 
-    @Column(name = "name")
+    @Column(name = "author_name")
     private String name;
 
     @ManyToMany(mappedBy = "authors")

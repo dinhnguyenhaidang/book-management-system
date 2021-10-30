@@ -33,20 +33,6 @@ public class AuthorService implements IAuthorService {
     AuthorConverter authorConverter;
 
     @Override
-    public List<AuthorDTO> getAllRecords() {
-        // Get all entities
-        List<AuthorEntity> allEntities = authorRepository.findAll();
-        List<AuthorDTO> allDTOs = new ArrayList<>();
-
-        // Convert entities to DTOs
-        for (AuthorEntity entity : allEntities) {
-            allDTOs.add(authorConverter.toDTO(entity));
-        }
-
-        return allDTOs;
-    }
-
-    @Override
     public AuthorDTO getRecordById(long authorId) {
         AuthorEntity authorEntity = authorRepository.findById(authorId).get();
         return authorConverter.toDTO(authorEntity);

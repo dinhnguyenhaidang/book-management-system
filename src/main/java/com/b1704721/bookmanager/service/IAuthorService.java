@@ -13,8 +13,6 @@ import java.util.List;
  */
 public interface IAuthorService {
 
-    List<AuthorDTO> getAllRecords();
-
     AuthorDTO getRecordById(long authorId);
 
     AuthorDTO saveRecord(AuthorDTO authorDTO);

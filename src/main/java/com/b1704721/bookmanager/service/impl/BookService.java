@@ -32,18 +32,16 @@ public class BookService implements IBookService {
     @Autowired
     BookConverter bookConverter;
 
-    @Override
-    public List<BookDTO> getAllRecords() {
-        // Get all entities
-        List<BookEntity> allEntities = bookRepository.findAll();
-        List<BookDTO> allDTOs = new ArrayList<>();
+    public void setBookRepository(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
-        // Convert entities to DTOs
-        for (BookEntity entity : allEntities) {
-            allDTOs.add(bookConverter.toDTO(entity));
-        }
+    public void setAuthorRepository(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
 
-        return allDTOs;
+    public void setBookConverter(BookConverter bookConverter) {
+        this.bookConverter = bookConverter;
     }
 
     @Override
