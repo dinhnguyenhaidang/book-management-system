@@ -6,9 +6,8 @@ package com.b1704721.bookmanager.dto;
  * @author B1704721
  * @version 1.0
  * @since 15-Sep-2021
- * @param <T>
  */
-public abstract class AbstractDTO<T> {
+public abstract class AbstractDTO {
 
     private Long id;
 

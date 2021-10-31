@@ -73,6 +73,27 @@ public class BookControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void testGetBookById_invalidId() throws Exception {
+        System.out.println("Testing getBookById_invalidId.");
+
+        // Given
+
+        // When
+        String uri = "/books/0";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON_VALUE);
+        MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
+
+        // Then
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        Assert.assertEquals(404, response.getStatus());
+
+        Mockito.verify(bookService, Mockito.times(1)).getRecordById(Mockito.anyLong());
+
+        Assert.assertEquals("", response.getContentAsString());
+    }
+
+    @Test
     public void testCreateBook_success() throws Exception {
         System.out.println("Testing createBook_success.");
 
@@ -96,7 +117,7 @@ public class BookControllerTest extends AbstractControllerTest {
         // Then
         MockHttpServletResponse response = mvcResult.getResponse();
 
-        Assert.assertEquals(200, response.getStatus());
+        Assert.assertEquals(201, response.getStatus());
 
         Mockito.verify(bookService, Mockito.times(1)).saveRecord(Mockito.any());
 
@@ -139,10 +160,40 @@ public class BookControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void testUpdateBook_invalidId() throws Exception {
+        System.out.println("Testing updateBook_invalidId.");
+
+        // Given
+        BookDTO inputBookDTO = new BookDTO();
+        inputBookDTO.setTitle("Updated Book Title 1");
+        String inputJson = super.mapToJson(inputBookDTO);
+
+        // When
+        String uri = "/books";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put(uri).contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(inputJson);
+        MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
+
+        // Then
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        Mockito.verify(bookService, Mockito.times(1)).updateRecord(Mockito.any());
+
+        Assert.assertEquals(404, response.getStatus());
+
+        Assert.assertEquals("", response.getContentAsString());
+    }
+
+    @Test
     public void testDeleteBookById_success() throws Exception {
         System.out.println("Testing deleteBook_success.");
 
         // Given
+        BookDTO expectedBookDTO = new BookDTO();
+        expectedBookDTO.setId(1L);
+        expectedBookDTO.setTitle("Book Title 1");
+
+        Mockito.when(bookService.getRecordById(Mockito.anyLong())).thenReturn(expectedBookDTO);
         Mockito.doNothing().when(bookService).deleteRecordById(Mockito.anyLong());
 
         // When
@@ -153,9 +204,32 @@ public class BookControllerTest extends AbstractControllerTest {
         // Then
         MockHttpServletResponse response = mvcResult.getResponse();
 
+        Mockito.verify(bookService, Mockito.times(1)).getRecordById(Mockito.anyLong());
         Mockito.verify(bookService, Mockito.times(1)).deleteRecordById(Mockito.anyLong());
 
         Assert.assertEquals(200, response.getStatus());
+
+        Assert.assertEquals("", response.getContentAsString());
+    }
+
+    @Test
+    public void testDeleteBookById_invalidId() throws Exception {
+        System.out.println("Testing deleteBook_invalidId.");
+
+        // Given
+
+        // When
+        String uri = "/books/0";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(uri).accept(MediaType.APPLICATION_JSON_VALUE);
+        MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
+
+        // Then
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        Mockito.verify(bookService, Mockito.times(1)).getRecordById(Mockito.anyLong());
+        Mockito.verify(bookService, Mockito.times(0)).deleteRecordById(Mockito.anyLong());
+
+        Assert.assertEquals(404, response.getStatus());
 
         Assert.assertEquals("", response.getContentAsString());
     }

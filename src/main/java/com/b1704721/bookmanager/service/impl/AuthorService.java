@@ -17,8 +17,8 @@ import java.util.List;
  * Provides services related to author
  *
  * @author B1704721
- * @version 1.0
- * @since 15-Sep-2021
+ * @version 1.1
+ * @since 31-Oct-2021
  */
 @Service
 public class AuthorService implements IAuthorService {
@@ -46,6 +46,9 @@ public class AuthorService implements IAuthorService {
 
     @Override
     public AuthorDTO getRecordById(long authorId) {
+        if (!authorRepository.findById(authorId).isPresent()) {
+            return null;
+        }
         AuthorEntity authorEntity = authorRepository.findById(authorId).get();
         return authorConverter.toDTO(authorEntity);
     }
@@ -74,6 +77,9 @@ public class AuthorService implements IAuthorService {
     @Override
     public AuthorDTO updateRecord(AuthorDTO authorDTO) {
         // Get old entity
+        if (!authorRepository.findById(authorDTO.getId()).isPresent()) {
+            return null;
+        }
         AuthorEntity authorEntity = authorRepository.findById(authorDTO.getId()).get();
 
         // Remove all old books
@@ -104,12 +110,8 @@ public class AuthorService implements IAuthorService {
     }
 
     @Override
-    public void deleteRecordById(long authorId) throws Exception {
-        if (!authorRepository.findById(authorId).isPresent()) {
-            throw new Exception("Author with id " + authorId + " does not exist.");
-        }
-
-        bookRepository.deleteById(authorId);
+    public void deleteRecordById(long authorId) {
+        authorRepository.deleteById(authorId);
     }
 
 }

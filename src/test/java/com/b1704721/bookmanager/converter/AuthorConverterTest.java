@@ -51,7 +51,7 @@ public class AuthorConverterTest {
 
         AuthorEntity authorEntity = new AuthorEntity();
         authorEntity.setId(1L);
-        authorEntity.setName("Author 1");
+        authorEntity.setName("Author Name 1");
         authorEntity.setBooks(bookEntities);
 
         // When
@@ -75,7 +75,7 @@ public class AuthorConverterTest {
         // Given
         AuthorDTO authorDTO = new AuthorDTO();
         authorDTO.setId(1L);
-        authorDTO.setName("Author 1");
+        authorDTO.setName("Author Name 1");
 
         // When
         AuthorEntity authorEntity = authorConverter.toEntity(authorDTO);

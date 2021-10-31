@@ -6,8 +6,8 @@ import com.b1704721.bookmanager.dto.BookDTO;
  * Follows template for Data Injection
  *
  * @author B1704721
- * @version 1.0
- * @since 15-Sep-2021
+ * @version 1.1
+ * @since 31-Oct-2021
  */
 public interface IBookService {
 
@@ -17,6 +17,6 @@ public interface IBookService {
 
     BookDTO updateRecord(BookDTO bookDTO);
 
-    void deleteRecordById(long bookId) throws Exception;
+    void deleteRecordById(long bookId);
 
 }

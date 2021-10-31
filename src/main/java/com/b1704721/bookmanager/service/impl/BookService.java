@@ -17,8 +17,8 @@ import java.util.List;
  * Provides services related to book
  *
  * @author B1704721
- * @version 1.0
- * @since 15-Sep-2021
+ * @version 1.1
+ * @since 31-Oct-2021
  */
 @Service
 public class BookService implements IBookService {
@@ -46,6 +46,9 @@ public class BookService implements IBookService {
 
     @Override
     public BookDTO getRecordById(long bookId) {
+        if (!bookRepository.findById(bookId).isPresent()) {
+            return null;
+        }
         BookEntity bookEntity = bookRepository.findById(bookId).get();
         return bookConverter.toDTO(bookEntity);
     }
@@ -71,11 +74,12 @@ public class BookService implements IBookService {
 
     @Override
     public BookDTO updateRecord(BookDTO bookDTO) {
-        // Get old entity
-        BookEntity bookEntity = bookRepository.findById(bookDTO.getId()).get();
+        if (!bookRepository.findById(bookDTO.getId()).isPresent()) {
+            return null;
+        }
 
         // Convert bookDTO to an entity and update it
-        bookEntity = bookConverter.toEntity(bookDTO);
+        BookEntity bookEntity = bookConverter.toEntity(bookDTO);
 
         // Get authors having provided ids
         try {
@@ -92,11 +96,7 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public void deleteRecordById(long bookId) throws Exception {
-        if (!bookRepository.findById(bookId).isPresent()) {
-            throw new Exception("Book with id " + bookId + " does not exist.");
-        }
-
+    public void deleteRecordById(long bookId) {
         bookRepository.deleteById(bookId);
     }
 

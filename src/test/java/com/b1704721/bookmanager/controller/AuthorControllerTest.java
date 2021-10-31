@@ -73,6 +73,27 @@ public class AuthorControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void testGetAuthorById_invalidId() throws Exception {
+        System.out.println("Testing getAuthorById_invalidId.");
+
+        // Given
+
+        // When
+        String uri = "/authors/0";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON_VALUE);
+        MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
+
+        // Then
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        Assert.assertEquals(404, response.getStatus());
+
+        Mockito.verify(authorService, Mockito.times(1)).getRecordById(Mockito.anyLong());
+
+        Assert.assertEquals("", response.getContentAsString());
+    }
+
+    @Test
     public void testCreateAuthor_success() throws Exception {
         System.out.println("Testing createAuthor_success.");
 
@@ -96,7 +117,7 @@ public class AuthorControllerTest extends AbstractControllerTest {
         // Then
         MockHttpServletResponse response = mvcResult.getResponse();
 
-        Assert.assertEquals(200, response.getStatus());
+        Assert.assertEquals(201, response.getStatus());
 
         Mockito.verify(authorService, Mockito.times(1)).saveRecord(Mockito.any());
 
@@ -139,10 +160,40 @@ public class AuthorControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void testUpdateAuthor_invalidId() throws Exception {
+        System.out.println("Testing updateAuthor_invalidId.");
+
+        // Given
+        AuthorDTO inputAuthorDTO = new AuthorDTO();
+        inputAuthorDTO.setName("Updated Author Name 1");
+        String inputJson = super.mapToJson(inputAuthorDTO);
+
+        // When
+        String uri = "/authors";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put(uri).contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(inputJson);
+        MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
+
+        // Then
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        Mockito.verify(authorService, Mockito.times(1)).updateRecord(Mockito.any());
+
+        Assert.assertEquals(404, response.getStatus());
+
+        Assert.assertEquals("", response.getContentAsString());
+    }
+
+    @Test
     public void testDeleteAuthorById_success() throws Exception {
         System.out.println("Testing deleteAuthor_success.");
 
         // Given
+        AuthorDTO expectedAuthorDTO = new AuthorDTO();
+        expectedAuthorDTO.setId(1L);
+        expectedAuthorDTO.setName("Author Name 1");
+
+        Mockito.when(authorService.getRecordById(Mockito.anyLong())).thenReturn(expectedAuthorDTO);
         Mockito.doNothing().when(authorService).deleteRecordById(Mockito.anyLong());
 
         // When
@@ -153,9 +204,32 @@ public class AuthorControllerTest extends AbstractControllerTest {
         // Then
         MockHttpServletResponse response = mvcResult.getResponse();
 
+        Mockito.verify(authorService, Mockito.times(1)).getRecordById(Mockito.anyLong());
         Mockito.verify(authorService, Mockito.times(1)).deleteRecordById(Mockito.anyLong());
 
         Assert.assertEquals(200, response.getStatus());
+
+        Assert.assertEquals("", response.getContentAsString());
+    }
+
+    @Test
+    public void testDeleteAuthorById_invalidId() throws Exception {
+        System.out.println("Testing deleteAuthor_invalidId.");
+
+        // Given
+
+        // When
+        String uri = "/authors/0";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(uri).accept(MediaType.APPLICATION_JSON_VALUE);
+        MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
+
+        // Then
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        Mockito.verify(authorService, Mockito.times(1)).getRecordById(Mockito.anyLong());
+        Mockito.verify(authorService, Mockito.times(0)).deleteRecordById(Mockito.anyLong());
+
+        Assert.assertEquals(404, response.getStatus());
 
         Assert.assertEquals("", response.getContentAsString());
     }

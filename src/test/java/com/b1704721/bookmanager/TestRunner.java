@@ -1,8 +1,5 @@
 package com.b1704721.bookmanager;
 
-import com.b1704721.bookmanager.controller.BookControllerTest;
-import com.b1704721.bookmanager.controller.ControllerTestSuite;
-import com.b1704721.bookmanager.service.impl.BookServiceTest;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runner.notification.Failure;

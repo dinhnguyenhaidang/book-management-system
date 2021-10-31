@@ -16,14 +16,13 @@ import java.util.Optional;
  * Tests BookService
  *
  * @author B1704721
- * @version 1.0
- * @since 03-Oct-2021
+ * @version 1.1
+ * @since 31-Oct-2021
  */
 @RunWith(MockitoJUnitRunner.class)
 public class BookServiceTest {
 
     private BookConverter bookConverter;
-    private AuthorRepository authorRepository;
     private BookRepository bookRepository;
     private BookService bookService;
 
@@ -42,7 +41,7 @@ public class BookServiceTest {
         System.out.println("Setting up.");
 
         bookConverter = Mockito.mock(BookConverter.class);
-        authorRepository = Mockito.mock(AuthorRepository.class);
+        AuthorRepository authorRepository = Mockito.mock(AuthorRepository.class);
         bookRepository = Mockito.mock(BookRepository.class);
 
         bookService = new BookService();
@@ -77,7 +76,7 @@ public class BookServiceTest {
         BookDTO actualBookDTO = bookService.getRecordById(bookEntity.getId());
 
         // Then
-        Mockito.verify(bookRepository, Mockito.times(1)).findById(Mockito.anyLong());
+        Mockito.verify(bookRepository, Mockito.times(2)).findById(Mockito.anyLong());
 
         Assert.assertEquals(expectedBookDTO.getId(), actualBookDTO.getId());
         Assert.assertEquals(expectedBookDTO.getTitle(), actualBookDTO.getTitle());
@@ -138,22 +137,18 @@ public class BookServiceTest {
     }
     
     @Test
-    public void testDeleteRecordById_success() throws Exception {
+    public void testDeleteRecordById_success() {
         System.out.println("Running testDeleteRecordById_success.");
 
         // Given
-        BookEntity bookEntity = new BookEntity();
-        bookEntity.setId(1L);
-        Optional<BookEntity> optionalBookEntity = Optional.of(bookEntity);
-        long bookId = bookEntity.getId();
-
-        Mockito.when(bookRepository.findById(Mockito.anyLong())).thenReturn(optionalBookEntity);
+        long bookId = 1L;
+        Mockito.doNothing().when(bookRepository).deleteById(bookId);
 
         // When
         bookService.deleteRecordById(bookId);
 
         // Then
-        Mockito.verify(bookRepository, Mockito.times(1)).deleteById(bookEntity.getId());
+        Mockito.verify(bookRepository, Mockito.times(1)).deleteById(bookId);
     }
 
 }

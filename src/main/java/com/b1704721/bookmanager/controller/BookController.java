@@ -3,17 +3,18 @@ package com.b1704721.bookmanager.controller;
 import com.b1704721.bookmanager.dto.BookDTO;
 import com.b1704721.bookmanager.service.IBookService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Handles requests related to book
  *
  * @author B1704721
- * @version 1.0
- * @since 16-Sep-2021
+ * @version 1.1
+ * @since 31-Oct-2021
  */
+@SuppressWarnings("unused")
 @RestController
 @RequestMapping(value = "/books")
 public class BookController {
@@ -22,23 +23,37 @@ public class BookController {
     private IBookService bookService;
 
     @GetMapping(value = "{bookId}")
-    public BookDTO getRecordById(@PathVariable(value = "bookId") Long bookId) {
-        return bookService.getRecordById(bookId);
+    public ResponseEntity<BookDTO> getRecordById(@PathVariable(value = "bookId") Long bookId) {
+        BookDTO responseDTO = bookService.getRecordById(bookId);
+        if (responseDTO == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @PostMapping
-    public BookDTO createRecord(@RequestBody BookDTO bookDTO) {
-        return bookService.saveRecord(bookDTO);
+    public ResponseEntity<BookDTO> createRecord(@RequestBody BookDTO bookDTO) {
+        BookDTO responseDTO = bookService.saveRecord(bookDTO);
+        return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public BookDTO updateRecord(@RequestBody BookDTO bookDTO) {
-        return bookService.updateRecord(bookDTO);
+    public ResponseEntity<BookDTO> updateRecord(@RequestBody BookDTO bookDTO) {
+        BookDTO responseDTO = bookService.updateRecord(bookDTO);
+        if (responseDTO == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "{bookId}")
-    public void deleteRecordById(@PathVariable(value = "bookId") Long bookId) throws Exception {
+    public ResponseEntity<BookDTO> deleteRecordById(@PathVariable(value = "bookId") Long bookId) {
+        BookDTO responseDTO = bookService.getRecordById(bookId);
+        if (responseDTO == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         bookService.deleteRecordById(bookId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

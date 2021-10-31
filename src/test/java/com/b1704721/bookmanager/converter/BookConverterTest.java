@@ -1,6 +1,5 @@
 package com.b1704721.bookmanager.converter;
 
-import com.b1704721.bookmanager.dto.AuthorDTO;
 import com.b1704721.bookmanager.dto.BookDTO;
 import com.b1704721.bookmanager.entity.AuthorEntity;
 import com.b1704721.bookmanager.entity.BookEntity;

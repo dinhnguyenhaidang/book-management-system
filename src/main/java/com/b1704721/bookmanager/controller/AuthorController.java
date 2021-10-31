@@ -3,9 +3,9 @@ package com.b1704721.bookmanager.controller;
 import com.b1704721.bookmanager.dto.AuthorDTO;
 import com.b1704721.bookmanager.service.IAuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 /**
  * Handles requests related to author
@@ -14,6 +14,7 @@ import java.util.List;
  * @version 1.0
  * @since 16-Sep-2021
  */
+@SuppressWarnings("unused")
 @RestController
 @RequestMapping(value = "/authors")
 public class AuthorController {
@@ -22,23 +23,37 @@ public class AuthorController {
     private IAuthorService authorService;
 
     @GetMapping(value = "{authorId}")
-    public AuthorDTO getRecordById(@PathVariable(value = "authorId") Long authorId) {
-        return authorService.getRecordById(authorId);
+    public ResponseEntity<AuthorDTO> getRecordById(@PathVariable(value = "authorId") Long authorId) {
+        AuthorDTO responseDTO = authorService.getRecordById(authorId);
+        if (responseDTO == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @PostMapping
-    public AuthorDTO createRecord(@RequestBody AuthorDTO authorDTO) {
-        return authorService.saveRecord(authorDTO);
+    public ResponseEntity<AuthorDTO> createRecord(@RequestBody AuthorDTO authorDTO) {
+        AuthorDTO responseDTO = authorService.saveRecord(authorDTO);
+        return new ResponseEntity<>(responseDTO, HttpStatus.CREATED);
     }
 
     @PutMapping
-    public AuthorDTO updateRecord(@RequestBody AuthorDTO authorDTO) {
-        return authorService.updateRecord(authorDTO);
+    public ResponseEntity<AuthorDTO> updateRecord(@RequestBody AuthorDTO authorDTO) {
+        AuthorDTO responseDTO = authorService.updateRecord(authorDTO);
+        if (responseDTO == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(responseDTO, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "{authorId}")
-    public void deleteRecordById(@PathVariable(value = "authorId") Long authorId) throws Exception {
+    public ResponseEntity<AuthorDTO> deleteRecordById(@PathVariable(value = "authorId") Long authorId) {
+        AuthorDTO responseDTO = authorService.getRecordById(authorId);
+        if (responseDTO == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         authorService.deleteRecordById(authorId);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
