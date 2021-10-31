@@ -2,8 +2,6 @@ package com.b1704721.bookmanager.service;
 
 import com.b1704721.bookmanager.dto.BookDTO;
 
-import java.util.List;
-
 /**
  * Follows template for Data Injection
  *
