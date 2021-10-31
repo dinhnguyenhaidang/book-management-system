@@ -10,7 +10,6 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.util.Arrays;
 import java.util.Optional;
 
 /**
@@ -24,6 +23,7 @@ import java.util.Optional;
 public class BookServiceTest {
 
     private BookConverter bookConverter;
+    private AuthorRepository authorRepository;
     private BookRepository bookRepository;
     private BookService bookService;
 
@@ -42,10 +42,12 @@ public class BookServiceTest {
         System.out.println("Setting up.");
 
         bookConverter = Mockito.mock(BookConverter.class);
+        authorRepository = Mockito.mock(AuthorRepository.class);
         bookRepository = Mockito.mock(BookRepository.class);
 
         bookService = new BookService();
         bookService.setBookConverter(bookConverter);
+        bookService.setAuthorRepository(authorRepository);
         bookService.setBookRepository(bookRepository);
     }
 
@@ -55,18 +57,18 @@ public class BookServiceTest {
     }
 
     @Test
-    public void testGetRecordById() throws Exception {
-        System.out.println("Running testGetRecordById.");
+    public void testGetRecordById_success() {
+        System.out.println("Running testGetRecordById_success.");
 
         // Given
         BookEntity bookEntity = new BookEntity();
         bookEntity.setId(1L);
-        bookEntity.setTitle("Title");
+        bookEntity.setTitle("Book Title 1");
         Optional<BookEntity> optionalBookEntity = Optional.of(bookEntity);
 
         BookDTO expectedBookDTO = new BookDTO();
         expectedBookDTO.setId(1L);
-        expectedBookDTO.setTitle("Title");
+        expectedBookDTO.setTitle("Book Title 1");
 
         Mockito.when(bookRepository.findById(Mockito.anyLong())).thenReturn(optionalBookEntity);
         Mockito.when(bookConverter.toDTO(Mockito.any())).thenReturn(expectedBookDTO);
@@ -82,17 +84,17 @@ public class BookServiceTest {
     }
 
     @Test
-    public void testSaveRecord() throws Exception {
-        System.out.println("Running testSaveRecord.");
+    public void testSaveRecord_success() {
+        System.out.println("Running testSaveRecord_success.");
 
         // Given
         BookEntity BookEntity = new BookEntity();
         BookEntity.setId(1L);
-        BookEntity.setTitle("Book Title");
+        BookEntity.setTitle("Book Title 1");
 
         BookDTO expectedBookDTO = new BookDTO();
         expectedBookDTO.setId(1L);
-        expectedBookDTO.setTitle("Book Title");
+        expectedBookDTO.setTitle("Book Title 1");
 
         Mockito.when(bookConverter.toEntity(Mockito.any())).thenReturn(BookEntity);
         Mockito.when(bookRepository.save(Mockito.any(BookEntity.class))).thenReturn(BookEntity);
@@ -108,18 +110,18 @@ public class BookServiceTest {
     }
 
     @Test
-    public void testUpdateRecord() throws Exception {
-        System.out.println("Running testUpdateRecord.");
+    public void testUpdateRecord_success() {
+        System.out.println("Running testUpdateRecord_success.");
 
         // Given
         BookEntity bookEntity = new BookEntity();
         bookEntity.setId(1L);
-        bookEntity.setTitle("Title");
+        bookEntity.setTitle("Book Title 1");
         Optional<BookEntity> optionalBookEntity = Optional.of(bookEntity);
 
         BookDTO expectedBookDTO = new BookDTO();
         expectedBookDTO.setId(1L);
-        expectedBookDTO.setTitle("Title");
+        expectedBookDTO.setTitle("Book Title 1");
 
         Mockito.when(bookRepository.findById(Mockito.anyLong())).thenReturn(optionalBookEntity);
         Mockito.when(bookConverter.toEntity(Mockito.any())).thenReturn(bookEntity);
@@ -136,8 +138,8 @@ public class BookServiceTest {
     }
     
     @Test
-    public void testDelete() throws Exception {
-        System.out.println("Running testDeleteRecordById.");
+    public void testDeleteRecordById_success() throws Exception {
+        System.out.println("Running testDeleteRecordById_success.");
 
         // Given
         BookEntity bookEntity = new BookEntity();

@@ -18,12 +18,12 @@ public class ServiceTestSuite {
 
     @BeforeClass
     public static void beforeClass() {
-        System.out.println("Start of ServiceTestSuite.\n");
+        System.out.println("Start of ServiceTestSuite.");
     }
 
     @AfterClass
     public static void afterClass() {
-        System.out.println("End of ServiceTestSuite.\n");
+        System.out.println("End of ServiceTestSuite.");
     }
 
 }

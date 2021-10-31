@@ -11,9 +11,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Tests BookController
  *
@@ -49,12 +46,12 @@ public class BookControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetBookById_success() throws Exception {
-        System.out.println("Testing getBookById.");
+        System.out.println("Testing getBookById_success.");
 
         // Given
         BookDTO expectedBookDTO = new BookDTO();
         expectedBookDTO.setId(1L);
-        expectedBookDTO.setTitle("Title");
+        expectedBookDTO.setTitle("Book Title 1");
 
         Mockito.when(bookService.getRecordById(Mockito.anyLong())).thenReturn(expectedBookDTO);
 
@@ -77,16 +74,16 @@ public class BookControllerTest extends AbstractControllerTest {
 
     @Test
     public void testCreateBook_success() throws Exception {
-        System.out.println("Testing createBook.");
+        System.out.println("Testing createBook_success.");
 
         // Given
         BookDTO inputBookDTO = new BookDTO();
-        inputBookDTO.setTitle("Title");
+        inputBookDTO.setTitle("Book Title 1");
         String inputJson = super.mapToJson(inputBookDTO);
 
         BookDTO expectedBookDTO = new BookDTO();
         expectedBookDTO.setId(1L);
-        expectedBookDTO.setTitle("Title");
+        expectedBookDTO.setTitle("Book Title 1");
 
         Mockito.when(bookService.saveRecord(Mockito.any())).thenReturn(expectedBookDTO);
 
@@ -110,11 +107,11 @@ public class BookControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdateBook_success() throws Exception {
-        System.out.println("Testing updateBook.");
+        System.out.println("Testing updateBook_success.");
 
         // Given
         BookDTO inputBookDTO = new BookDTO();
-        inputBookDTO.setTitle("Updated Title");
+        inputBookDTO.setTitle("Updated Book Title 1");
         String inputJson = super.mapToJson(inputBookDTO);
 
         BookDTO expectedBookDTO = new BookDTO();
@@ -143,7 +140,7 @@ public class BookControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDeleteBookById_success() throws Exception {
-        System.out.println("Testing deleteBook.");
+        System.out.println("Testing deleteBook_success.");
 
         // Given
         Mockito.doNothing().when(bookService).deleteRecordById(Mockito.anyLong());

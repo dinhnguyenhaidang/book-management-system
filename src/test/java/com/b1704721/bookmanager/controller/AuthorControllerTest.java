@@ -11,9 +11,6 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Tests AuthorController
  *
@@ -28,17 +25,17 @@ public class AuthorControllerTest extends AbstractControllerTest {
 
     @BeforeClass
     public static void beforeClass() {
-        System.out.println("\nStart of AuthorControllerTest.\n");
+        System.out.println("Start of AuthorControllerTest.");
     }
 
     @AfterClass
     public static void afterClass() {
-        System.out.println("\nEnd of AuthorControllerTest.");
+        System.out.println("End of AuthorControllerTest.");
     }
 
     @Before
     public void setUp() {
-        System.out.println("\nSetting up.");
+        System.out.println("Setting up.");
         super.setUp();
     }
 
@@ -49,12 +46,12 @@ public class AuthorControllerTest extends AbstractControllerTest {
 
     @Test
     public void testGetAuthorById_success() throws Exception {
-        System.out.println("Testing getAuthorById.");
+        System.out.println("Testing getAuthorById_success.");
 
         // Given
         AuthorDTO expectedAuthorDTO = new AuthorDTO();
         expectedAuthorDTO.setId(1L);
-        expectedAuthorDTO.setName("Name");
+        expectedAuthorDTO.setName("Author Name 1");
 
         Mockito.when(authorService.getRecordById(Mockito.anyLong())).thenReturn(expectedAuthorDTO);
 
@@ -77,16 +74,16 @@ public class AuthorControllerTest extends AbstractControllerTest {
 
     @Test
     public void testCreateAuthor_success() throws Exception {
-        System.out.println("Testing createAuthor.");
+        System.out.println("Testing createAuthor_success.");
 
         // Given
         AuthorDTO inputAuthorDTO = new AuthorDTO();
-        inputAuthorDTO.setName("Name");
+        inputAuthorDTO.setName("Author Name 1");
         String inputJson = super.mapToJson(inputAuthorDTO);
 
         AuthorDTO expectedAuthorDTO = new AuthorDTO();
         expectedAuthorDTO.setId(1L);
-        expectedAuthorDTO.setName("Name");
+        expectedAuthorDTO.setName("Author Name 1");
 
         Mockito.when(authorService.saveRecord(Mockito.any())).thenReturn(expectedAuthorDTO);
 
@@ -110,11 +107,11 @@ public class AuthorControllerTest extends AbstractControllerTest {
 
     @Test
     public void testUpdateAuthor_success() throws Exception {
-        System.out.println("Testing updateAuthor.");
+        System.out.println("Testing updateAuthor_success.");
 
         // Given
         AuthorDTO inputAuthorDTO = new AuthorDTO();
-        inputAuthorDTO.setName("Updated Name");
+        inputAuthorDTO.setName("Updated Author Name 1");
         String inputJson = super.mapToJson(inputAuthorDTO);
 
         AuthorDTO expectedAuthorDTO = new AuthorDTO();
@@ -143,7 +140,7 @@ public class AuthorControllerTest extends AbstractControllerTest {
 
     @Test
     public void testDeleteAuthorById_success() throws Exception {
-        System.out.println("Testing deleteAuthor.");
+        System.out.println("Testing deleteAuthor_success.");
 
         // Given
         Mockito.doNothing().when(authorService).deleteRecordById(Mockito.anyLong());

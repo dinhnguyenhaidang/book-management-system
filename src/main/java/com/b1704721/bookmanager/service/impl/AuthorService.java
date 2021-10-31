@@ -24,13 +24,25 @@ import java.util.List;
 public class AuthorService implements IAuthorService {
 
     @Autowired
+    AuthorConverter authorConverter;
+
+    @Autowired
     AuthorRepository authorRepository;
 
     @Autowired
     BookRepository bookRepository;
 
-    @Autowired
-    AuthorConverter authorConverter;
+    public void setAuthorConverter(AuthorConverter authorConverter) {
+        this.authorConverter = authorConverter;
+    }
+
+    public void setAuthorRepository(AuthorRepository authorRepository) {
+        this.authorRepository = authorRepository;
+    }
+
+    public void setBookRepository(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
+    }
 
     @Override
     public AuthorDTO getRecordById(long authorId) {

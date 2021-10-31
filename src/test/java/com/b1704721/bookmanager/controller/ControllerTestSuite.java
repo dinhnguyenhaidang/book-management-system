@@ -18,12 +18,12 @@ public class ControllerTestSuite {
 
     @BeforeClass
     public static void beforeClass() {
-        System.out.println("\nStart of ControllerTestSuite.\n");
+        System.out.println("Start of ControllerTestSuite.");
     }
 
     @AfterClass
     public static void afterClass() {
-        System.out.println("\nEnd of ControllerTestSuite.");
+        System.out.println("End of ControllerTestSuite.");
     }
 
 }

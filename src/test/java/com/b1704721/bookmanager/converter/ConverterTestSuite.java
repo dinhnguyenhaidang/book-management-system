@@ -18,12 +18,12 @@ public class ConverterTestSuite {
 
     @BeforeClass
     public static void beforeClass() {
-        System.out.println("Start of ConverterTestSuite.\n");
+        System.out.println("Start of ConverterTestSuite.");
     }
 
     @AfterClass
     public static void afterClass() {
-        System.out.println("End of ConverterTestSuite.\n");
+        System.out.println("End of ConverterTestSuite.");
     }
 
 }

@@ -17,7 +17,7 @@ import org.junit.runner.notification.Failure;
 class TestRunner {
 
 	public static void main(String[] args) {
-		Result result = JUnitCore.runClasses(BookServiceTest.class);
+		Result result = JUnitCore.runClasses(ApplicationTestSuite.class);
 
 		for (Failure failure : result.getFailures()) {
 			System.out.println(failure.toString());

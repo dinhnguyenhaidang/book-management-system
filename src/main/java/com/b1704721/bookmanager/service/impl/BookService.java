@@ -24,24 +24,24 @@ import java.util.List;
 public class BookService implements IBookService {
 
     @Autowired
-    BookRepository bookRepository;
+    BookConverter bookConverter;
 
     @Autowired
     AuthorRepository authorRepository;
 
     @Autowired
-    BookConverter bookConverter;
+    BookRepository bookRepository;
 
-    public void setBookRepository(BookRepository bookRepository) {
-        this.bookRepository = bookRepository;
+    public void setBookConverter(BookConverter bookConverter) {
+        this.bookConverter = bookConverter;
     }
 
     public void setAuthorRepository(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
 
-    public void setBookConverter(BookConverter bookConverter) {
-        this.bookConverter = bookConverter;
+    public void setBookRepository(BookRepository bookRepository) {
+        this.bookRepository = bookRepository;
     }
 
     @Override

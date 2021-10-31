@@ -18,7 +18,7 @@ import java.util.List;
 @Table(name = "author")
 public class AuthorEntity extends AbstractEntity {
 
-    @Column(name = "author_name")
+    @Column(name = "name")
     private String name;
 
     @ManyToMany(mappedBy = "authors")

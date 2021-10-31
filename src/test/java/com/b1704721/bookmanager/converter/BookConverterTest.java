@@ -1,5 +1,6 @@
 package com.b1704721.bookmanager.converter;
 
+import com.b1704721.bookmanager.dto.AuthorDTO;
 import com.b1704721.bookmanager.dto.BookDTO;
 import com.b1704721.bookmanager.entity.AuthorEntity;
 import com.b1704721.bookmanager.entity.BookEntity;
@@ -21,12 +22,12 @@ public class BookConverterTest {
 
     @BeforeClass
     public static void beforeClass() {
-        System.out.println("Start of BookConverterTest.\n");
+        System.out.println("Start of BookConverterTest.");
     }
 
     @AfterClass
     public static void afterClass() {
-        System.out.println("End of BookConverterTest.\n");
+        System.out.println("End of BookConverterTest.");
     }
 
     @Before
@@ -38,12 +39,12 @@ public class BookConverterTest {
     @After
     public void tearDown() {
         bookConverter = null;
-        System.out.println("Tearing down.\n");
+        System.out.println("Tearing down.");
     }
     
     @Test
-    public void testToDTO() {
-        System.out.println("Testing toDTO.");
+    public void testToDTO_success() {
+        System.out.println("Testing toDTO_success.");
 
         // Given
         AuthorEntity authorEntity1 = new AuthorEntity();
@@ -58,7 +59,7 @@ public class BookConverterTest {
 
         BookEntity bookEntity = new BookEntity();
         bookEntity.setId(1L);
-        bookEntity.setTitle("Title");
+        bookEntity.setTitle("Book 1");
         bookEntity.setAuthors(authorEntities);
 
         // When
@@ -67,28 +68,29 @@ public class BookConverterTest {
         // Then
         Assert.assertEquals(bookEntity.getId(), bookDTO.getId());
         Assert.assertEquals(bookEntity.getTitle(), bookDTO.getTitle());
-        Assert.assertEquals(bookEntity.getAuthors().size(), bookDTO.getAuthorIds().size());
-        for (int i = 0; i < bookEntity.getAuthors().size(); i++) {
-            Assert.assertEquals(bookEntity.getAuthors().get(i).getId(), bookDTO.getAuthorIds().get(i));
+        if (bookEntity.getAuthors() != null) {
+            Assert.assertEquals(bookEntity.getAuthors().size(), bookDTO.getAuthorIds().size());
+            for (int i = 0; i < bookEntity.getAuthors().size(); i++) {
+                Assert.assertEquals(bookEntity.getAuthors().get(i).getId(), bookDTO.getAuthorIds().get(i));
+            }
         }
     }
     
     @Test
-    public void testToEntity() {
-        System.out.println("Testing toEntity.");
+    public void testToEntity_success() {
+        System.out.println("Testing toEntity_success.");
 
         // Given
-        BookDTO BookDTO = new BookDTO();
-        BookDTO.setId(1L);
-        BookDTO.setTitle("Book Title");
-        BookDTO.setAuthorIds(null);
+        BookDTO bookDTO = new BookDTO();
+        bookDTO.setId(1L);
+        bookDTO.setTitle("Book 1");
 
         // When
-        BookEntity bookEntity = bookConverter.toEntity(BookDTO);
+        BookEntity bookEntity = bookConverter.toEntity(bookDTO);
 
         // Then
-        Assert.assertEquals(BookDTO.getId(), bookEntity.getId());
-        Assert.assertEquals(BookDTO.getTitle(), bookEntity.getTitle());
+        Assert.assertEquals(bookDTO.getId(), bookEntity.getId());
+        Assert.assertEquals(bookDTO.getTitle(), bookEntity.getTitle());
     }
 
 }
