@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Provides services related to book
+ * Implements services related to book
  *
  * @author B1704721
  * @version 1.1
@@ -46,19 +46,21 @@ public class BookService implements IBookService {
 
     @Override
     public BookDTO getRecordById(long bookId) {
+        // Validate id
         if (!bookRepository.findById(bookId).isPresent()) {
             return null;
         }
+
         BookEntity bookEntity = bookRepository.findById(bookId).get();
         return bookConverter.toDTO(bookEntity);
     }
 
     @Override
     public BookDTO saveRecord(BookDTO bookDTO) {
-        // Convert bookDTO to an entity and assign it to bookEntity
+        // Convert bookDTO to bookEntity
         BookEntity bookEntity = bookConverter.toEntity(bookDTO);
 
-        // Get authors having provided ids
+        // Get authors of this book
         try {
             List<AuthorEntity> authorEntities = authorRepository.findAllById(bookDTO.getAuthorIds());
             bookEntity.setAuthors(authorEntities);
@@ -74,14 +76,15 @@ public class BookService implements IBookService {
 
     @Override
     public BookDTO updateRecord(BookDTO bookDTO) {
+        // Validate id
         if (!bookRepository.findById(bookDTO.getId()).isPresent()) {
             return null;
         }
 
-        // Convert bookDTO to an entity and update it
+        // Convert bookDTO to bookEntity (update bookEntity)
         BookEntity bookEntity = bookConverter.toEntity(bookDTO);
 
-        // Get authors having provided ids
+        // Get authors of this book
         try {
             List<AuthorEntity> authorEntities = authorRepository.findAllById(bookDTO.getAuthorIds());
             bookEntity.setAuthors(authorEntities);

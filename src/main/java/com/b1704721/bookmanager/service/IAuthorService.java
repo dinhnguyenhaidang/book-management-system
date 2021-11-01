@@ -3,7 +3,7 @@ package com.b1704721.bookmanager.service;
 import com.b1704721.bookmanager.dto.AuthorDTO;
 
 /**
- * Follows template for Data Injection
+ * Provides services related to author and follows template for Data Injection
  *
  * @author B1704721
  * @version 1.1

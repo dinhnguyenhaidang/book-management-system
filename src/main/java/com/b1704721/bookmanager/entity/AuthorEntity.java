@@ -11,8 +11,8 @@ import java.util.List;
  * Defines author entity, its relationships and maps it to the corresponding table in database
  *
  * @author B1704721
- * @version 1.0
- * @since 15-Sep-2021
+ * @version 1.1
+ * @since 31-Oct-2021
  */
 @Entity
 @Table(name = "author")
@@ -40,7 +40,7 @@ public class AuthorEntity extends AbstractEntity {
         this.books = books;
     }
 
-    public void addBook(BookEntity bookEntity) {
+    public void addTo(BookEntity bookEntity) {
         this.books.add(bookEntity);
         bookEntity.getAuthors().add(this);
     }

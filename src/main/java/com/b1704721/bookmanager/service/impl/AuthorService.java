@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Provides services related to author
+ * Implements services related to author
  *
  * @author B1704721
  * @version 1.1
@@ -46,9 +46,11 @@ public class AuthorService implements IAuthorService {
 
     @Override
     public AuthorDTO getRecordById(long authorId) {
+        // Validate id
         if (!authorRepository.findById(authorId).isPresent()) {
             return null;
         }
+
         AuthorEntity authorEntity = authorRepository.findById(authorId).get();
         return authorConverter.toDTO(authorEntity);
     }
@@ -58,11 +60,11 @@ public class AuthorService implements IAuthorService {
         // Convert authorDTO to authorEntity
         AuthorEntity authorEntity = authorConverter.toEntity(authorDTO);
 
-        // Update books of the author
+        // Get books of this author
         try {
             List<BookEntity> bookEntities = bookRepository.findAllById(authorDTO.getBookIds());
             for (BookEntity bookEntity : bookEntities) {
-                authorEntity.addBook(bookEntity);
+                authorEntity.addTo(bookEntity);
             }
         } catch (Exception ex) {
             authorEntity.setBooks(new ArrayList<>());
@@ -76,28 +78,30 @@ public class AuthorService implements IAuthorService {
 
     @Override
     public AuthorDTO updateRecord(AuthorDTO authorDTO) {
-        // Get old entity
+        // Validate id
         if (!authorRepository.findById(authorDTO.getId()).isPresent()) {
             return null;
         }
+
+        // Get current authorEntity
         AuthorEntity authorEntity = authorRepository.findById(authorDTO.getId()).get();
 
-        // Remove all old books
+        // Remove this author from this author's book's authors
         for (BookEntity bookEntity : authorEntity.getBooks()) {
             authorEntity.removeFrom(bookEntity);
             bookRepository.save(bookEntity);
         }
         authorEntity.setBooks(new ArrayList<>());
 
-        // Get updated data from authorDTO
+        // Convert authorDTO to authorEntity (update authorEntity)
         authorEntity = authorConverter.toEntity(authorDTO);
 
-        // Update books of the author
+        // Add this author to this author's book's authors
         try {
             List<BookEntity> bookEntities = bookRepository.findAllById(authorDTO.getBookIds());
-            for (BookEntity songEntity : bookEntities) {
-                authorEntity.addBook(songEntity);
-                bookRepository.save(songEntity);
+            for (BookEntity bookEntity : bookEntities) {
+                authorEntity.addTo(bookEntity);
+                bookRepository.save(bookEntity);
             }
         } catch (Exception ex) {
             authorEntity.setBooks(new ArrayList<>());

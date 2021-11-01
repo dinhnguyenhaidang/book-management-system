@@ -12,8 +12,8 @@ import java.util.List;
  * Converts DTO to entity and vice versa
  *
  * @author B1704721
- * @version 1.0
- * @since 15-Sep-2021
+ * @version 1.1
+ * @since 31-Oct-2021
  */
 @Component
 public class BookConverter {
@@ -21,7 +21,7 @@ public class BookConverter {
     public BookDTO toDTO(BookEntity bookEntity) {
         BookDTO bookDTO = new BookDTO();
 
-        // Get author ids from book's author set
+        // Get author ids from book's authors
         List<Long> authorIds = new ArrayList<>();
         try {
             for (AuthorEntity author : bookEntity.getAuthors()) {

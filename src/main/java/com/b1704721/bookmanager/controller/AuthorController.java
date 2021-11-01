@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
  * Handles requests related to author
  *
  * @author B1704721
- * @version 1.0
- * @since 16-Sep-2021
+ * @version 1.1
+ * @since 31-Oct-2021
  */
 @SuppressWarnings("unused")
 @RestController
