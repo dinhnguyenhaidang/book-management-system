@@ -132,6 +132,7 @@ public class AuthorControllerTest extends AbstractControllerTest {
 
         // Given
         AuthorDTO inputAuthorDTO = new AuthorDTO();
+        inputAuthorDTO.setId(1L);
         inputAuthorDTO.setName("Updated Author Name 1");
         String inputJson = super.mapToJson(inputAuthorDTO);
 
@@ -165,7 +166,8 @@ public class AuthorControllerTest extends AbstractControllerTest {
 
         // Given
         AuthorDTO inputAuthorDTO = new AuthorDTO();
-        inputAuthorDTO.setName("Updated Author Name 1");
+        inputAuthorDTO.setId(0L);
+        inputAuthorDTO.setName("Updated Author Name 0");
         String inputJson = super.mapToJson(inputAuthorDTO);
 
         // When

@@ -7,6 +7,7 @@ import com.b1704721.bookmanager.repository.AuthorRepository;
 import com.b1704721.bookmanager.repository.BookRepository;
 import org.junit.*;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -83,6 +84,22 @@ public class BookServiceTest {
     }
 
     @Test
+    public void testGetRecordById_invalidId() {
+        System.out.println("Running testGetRecordById_invalidId.");
+
+        // Given
+        long bookId = 0L;
+
+        // When
+        BookDTO actualBookDTO = bookService.getRecordById(bookId);
+
+        // Then
+        Mockito.verify(bookRepository, Mockito.times(1)).findById(Mockito.anyLong());
+
+        Assert.assertNull(actualBookDTO);
+    }
+
+    @Test
     public void testSaveRecord_success() {
         System.out.println("Running testSaveRecord_success.");
 
@@ -115,25 +132,42 @@ public class BookServiceTest {
         // Given
         BookEntity bookEntity = new BookEntity();
         bookEntity.setId(1L);
-        bookEntity.setTitle("Book Title 1");
+        bookEntity.setTitle("Updated Book Title 1");
         Optional<BookEntity> optionalBookEntity = Optional.of(bookEntity);
 
-        BookDTO expectedBookDTO = new BookDTO();
-        expectedBookDTO.setId(1L);
-        expectedBookDTO.setTitle("Book Title 1");
+        BookDTO bookDTO = new BookDTO();
+        bookDTO.setId(1L);
+        bookDTO.setTitle("Updated Book Title 1");
 
         Mockito.when(bookRepository.findById(Mockito.anyLong())).thenReturn(optionalBookEntity);
         Mockito.when(bookConverter.toEntity(Mockito.any())).thenReturn(bookEntity);
         Mockito.when(bookRepository.save(Mockito.any(BookEntity.class))).thenReturn(bookEntity);
-        Mockito.when(bookConverter.toDTO(Mockito.any())).thenReturn(expectedBookDTO);
+        Mockito.when(bookConverter.toDTO(Mockito.any())).thenReturn(bookDTO);
 
         // When
-        BookDTO actualBookDTO = bookService.updateRecord(expectedBookDTO);
+        BookDTO actualBookDTO = bookService.updateRecord(bookDTO);
 
         // Then
         Mockito.verify(bookRepository, Mockito.times(1)).save(bookEntity);
-        Assert.assertEquals(expectedBookDTO.getId(), actualBookDTO.getId());
-        Assert.assertEquals(expectedBookDTO.getTitle(), actualBookDTO.getTitle());
+        Assert.assertEquals(bookDTO.getId(), actualBookDTO.getId());
+        Assert.assertEquals(bookDTO.getTitle(), actualBookDTO.getTitle());
+    }
+
+    @Test
+    public void testUpdateRecord_invalidId() {
+        System.out.println("Running testUpdateRecord_invalidId.");
+
+        // Given
+        BookDTO bookDTO = new BookDTO();
+        bookDTO.setId(0L);
+        bookDTO.setTitle("Updated Book Title 0");
+
+        // When
+        BookDTO actualBookDTO = bookService.updateRecord(bookDTO);
+
+        // Then
+        Mockito.verify(bookRepository, Mockito.times(0)).save(Mockito.any());
+        Assert.assertNull(actualBookDTO);
     }
     
     @Test

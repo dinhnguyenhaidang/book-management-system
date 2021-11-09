@@ -83,6 +83,22 @@ public class AuthorServiceTest {
     }
 
     @Test
+    public void testGetRecordById_invalidId() {
+        System.out.println("Running testGetRecordById_invalidId.");
+
+        // Given
+        long authorId = 0L;
+
+        // When
+        AuthorDTO actualAuthorDTO = authorService.getRecordById(authorId);
+
+        // Then
+        Mockito.verify(authorRepository, Mockito.times(1)).findById(Mockito.anyLong());
+
+        Assert.assertNull(actualAuthorDTO);
+    }
+
+    @Test
     public void testSaveRecord_success() {
         System.out.println("Running testSaveRecord_success.");
 
@@ -115,12 +131,12 @@ public class AuthorServiceTest {
         // Given
         AuthorEntity authorEntity = new AuthorEntity();
         authorEntity.setId(1L);
-        authorEntity.setName("Author Name 1");
+        authorEntity.setName("Updated Author Name 1");
         Optional<AuthorEntity> optionalAuthorEntity = Optional.of(authorEntity);
 
         AuthorDTO expectedAuthorDTO = new AuthorDTO();
         expectedAuthorDTO.setId(1L);
-        expectedAuthorDTO.setName("Author Name 1");
+        expectedAuthorDTO.setName("Updated Author Name 1");
 
         Mockito.when(authorRepository.findById(Mockito.anyLong())).thenReturn(optionalAuthorEntity);
         Mockito.when(authorConverter.toEntity(Mockito.any())).thenReturn(authorEntity);
@@ -131,9 +147,26 @@ public class AuthorServiceTest {
         AuthorDTO actualAuthorDTO = authorService.updateRecord(expectedAuthorDTO);
 
         // Then
-        Mockito.verify(authorRepository, Mockito.times(1)).save(authorEntity);
+        Mockito.verify(authorRepository, Mockito.times(1)).save(Mockito.any());
         Assert.assertEquals(expectedAuthorDTO.getId(), actualAuthorDTO.getId());
         Assert.assertEquals(expectedAuthorDTO.getName(), actualAuthorDTO.getName());
+    }
+
+    @Test
+    public void testUpdateRecord_invalidId() {
+        System.out.println("Running testUpdateRecord_invalidId.");
+
+        // Given
+        AuthorDTO authorDTO = new AuthorDTO();
+        authorDTO.setId(0L);
+        authorDTO.setName("Updated Author Name 0");
+
+        // When
+        AuthorDTO actualAuthorDTO = authorService.updateRecord(authorDTO);
+
+        // Then
+        Mockito.verify(authorRepository, Mockito.times(0)).save(Mockito.any());
+        Assert.assertNull(actualAuthorDTO);
     }
 
     @Test

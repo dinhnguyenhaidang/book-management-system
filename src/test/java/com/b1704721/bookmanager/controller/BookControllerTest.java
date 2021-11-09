@@ -132,6 +132,7 @@ public class BookControllerTest extends AbstractControllerTest {
 
         // Given
         BookDTO inputBookDTO = new BookDTO();
+        inputBookDTO.setId(1L);
         inputBookDTO.setTitle("Updated Book Title 1");
         String inputJson = super.mapToJson(inputBookDTO);
 
@@ -165,7 +166,8 @@ public class BookControllerTest extends AbstractControllerTest {
 
         // Given
         BookDTO inputBookDTO = new BookDTO();
-        inputBookDTO.setTitle("Updated Book Title 1");
+        inputBookDTO.setId(0L);
+        inputBookDTO.setTitle("Updated Book Title 0");
         String inputJson = super.mapToJson(inputBookDTO);
 
         // When
