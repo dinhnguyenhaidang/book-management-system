@@ -45,6 +45,39 @@ public class AuthorControllerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void testCreateAuthor_success() throws Exception {
+        System.out.println("Testing createAuthor_success.");
+
+        // Given
+        AuthorDTO inputAuthorDTO = new AuthorDTO();
+        inputAuthorDTO.setName("Author Name 1");
+        String inputJson = super.mapToJson(inputAuthorDTO);
+
+        AuthorDTO expectedAuthorDTO = new AuthorDTO();
+        expectedAuthorDTO.setId(1L);
+        expectedAuthorDTO.setName("Author Name 1");
+
+        Mockito.when(authorService.saveRecord(Mockito.any())).thenReturn(expectedAuthorDTO);
+
+        // When
+        String uri = "/authors";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(inputJson);
+        MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
+
+        // Then
+        MockHttpServletResponse response = mvcResult.getResponse();
+
+        Assert.assertEquals(201, response.getStatus());
+
+        Mockito.verify(authorService, Mockito.times(1)).saveRecord(Mockito.any());
+
+        AuthorDTO actualAuthorDTO = super.mapFromJson(response.getContentAsString(), AuthorDTO.class);
+        Assert.assertEquals(expectedAuthorDTO.getId(), actualAuthorDTO.getId());
+        Assert.assertEquals(expectedAuthorDTO.getName(), actualAuthorDTO.getName());
+    }
+
+    @Test
     public void testGetAuthorById_success() throws Exception {
         System.out.println("Testing getAuthorById_success.");
 
@@ -91,39 +124,6 @@ public class AuthorControllerTest extends AbstractControllerTest {
         Mockito.verify(authorService, Mockito.times(1)).getRecordById(Mockito.anyLong());
 
         Assert.assertEquals("", response.getContentAsString());
-    }
-
-    @Test
-    public void testCreateAuthor_success() throws Exception {
-        System.out.println("Testing createAuthor_success.");
-
-        // Given
-        AuthorDTO inputAuthorDTO = new AuthorDTO();
-        inputAuthorDTO.setName("Author Name 1");
-        String inputJson = super.mapToJson(inputAuthorDTO);
-
-        AuthorDTO expectedAuthorDTO = new AuthorDTO();
-        expectedAuthorDTO.setId(1L);
-        expectedAuthorDTO.setName("Author Name 1");
-
-        Mockito.when(authorService.saveRecord(Mockito.any())).thenReturn(expectedAuthorDTO);
-
-        // When
-        String uri = "/authors";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_VALUE)
-                .content(inputJson);
-        MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
-
-        // Then
-        MockHttpServletResponse response = mvcResult.getResponse();
-
-        Assert.assertEquals(201, response.getStatus());
-
-        Mockito.verify(authorService, Mockito.times(1)).saveRecord(Mockito.any());
-
-        AuthorDTO actualAuthorDTO = super.mapFromJson(response.getContentAsString(), AuthorDTO.class);
-        Assert.assertEquals(expectedAuthorDTO.getId(), actualAuthorDTO.getId());
-        Assert.assertEquals(expectedAuthorDTO.getName(), actualAuthorDTO.getName());
     }
 
     @Test

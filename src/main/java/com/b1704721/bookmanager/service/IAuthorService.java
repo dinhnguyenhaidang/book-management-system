@@ -11,9 +11,9 @@ import com.b1704721.bookmanager.dto.AuthorDTO;
  */
 public interface IAuthorService {
 
-    AuthorDTO getRecordById(long authorId);
-
     AuthorDTO saveRecord(AuthorDTO authorDTO);
+
+    AuthorDTO getRecordById(long authorId);
 
     AuthorDTO updateRecord(AuthorDTO authorDTO);
 

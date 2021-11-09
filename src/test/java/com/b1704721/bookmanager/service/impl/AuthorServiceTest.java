@@ -56,6 +56,32 @@ public class AuthorServiceTest {
     }
 
     @Test
+    public void testSaveRecord_success() {
+        System.out.println("Running testSaveRecord_success.");
+
+        // Given
+        AuthorEntity authorEntity = new AuthorEntity();
+        authorEntity.setId(1L);
+        authorEntity.setName("Author Name 1");
+
+        AuthorDTO expectedAuthorDTO = new AuthorDTO();
+        expectedAuthorDTO.setId(1L);
+        expectedAuthorDTO.setName("Author Name 1");
+
+        Mockito.when(authorConverter.toEntity(Mockito.any())).thenReturn(authorEntity);
+        Mockito.when(authorRepository.save(Mockito.any(AuthorEntity.class))).thenReturn(authorEntity);
+        Mockito.when(authorConverter.toDTO(Mockito.any())).thenReturn(expectedAuthorDTO);
+
+        // When
+        AuthorDTO actualAuthorDTO = authorService.saveRecord(expectedAuthorDTO);
+
+        // Then
+        Mockito.verify(authorRepository, Mockito.times(1)).save(authorEntity);
+        Assert.assertEquals(expectedAuthorDTO.getId(), actualAuthorDTO.getId());
+        Assert.assertEquals(expectedAuthorDTO.getName(), actualAuthorDTO.getName());
+    }
+
+    @Test
     public void testGetRecordById_success() {
         System.out.println("Running testGetRecordById_success.");
 
@@ -96,32 +122,6 @@ public class AuthorServiceTest {
         Mockito.verify(authorRepository, Mockito.times(1)).findById(Mockito.anyLong());
 
         Assert.assertNull(actualAuthorDTO);
-    }
-
-    @Test
-    public void testSaveRecord_success() {
-        System.out.println("Running testSaveRecord_success.");
-
-        // Given
-        AuthorEntity authorEntity = new AuthorEntity();
-        authorEntity.setId(1L);
-        authorEntity.setName("Author Name 1");
-
-        AuthorDTO expectedAuthorDTO = new AuthorDTO();
-        expectedAuthorDTO.setId(1L);
-        expectedAuthorDTO.setName("Author Name 1");
-
-        Mockito.when(authorConverter.toEntity(Mockito.any())).thenReturn(authorEntity);
-        Mockito.when(authorRepository.save(Mockito.any(AuthorEntity.class))).thenReturn(authorEntity);
-        Mockito.when(authorConverter.toDTO(Mockito.any())).thenReturn(expectedAuthorDTO);
-
-        // When
-        AuthorDTO actualAuthorDTO = authorService.saveRecord(expectedAuthorDTO);
-
-        // Then
-        Mockito.verify(authorRepository, Mockito.times(1)).save(authorEntity);
-        Assert.assertEquals(expectedAuthorDTO.getId(), actualAuthorDTO.getId());
-        Assert.assertEquals(expectedAuthorDTO.getName(), actualAuthorDTO.getName());
     }
 
     @Test

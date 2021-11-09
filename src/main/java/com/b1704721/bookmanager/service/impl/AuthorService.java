@@ -45,17 +45,6 @@ public class AuthorService implements IAuthorService {
     }
 
     @Override
-    public AuthorDTO getRecordById(long authorId) {
-        // Validate id
-        if (!authorRepository.findById(authorId).isPresent()) {
-            return null;
-        }
-
-        AuthorEntity authorEntity = authorRepository.findById(authorId).get();
-        return authorConverter.toDTO(authorEntity);
-    }
-
-    @Override
     public AuthorDTO saveRecord(AuthorDTO authorDTO) {
         // Convert authorDTO to authorEntity
         AuthorEntity authorEntity = authorConverter.toEntity(authorDTO);
@@ -73,6 +62,17 @@ public class AuthorService implements IAuthorService {
         // Save the entity
         authorEntity = authorRepository.save(authorEntity);
 
+        return authorConverter.toDTO(authorEntity);
+    }
+
+    @Override
+    public AuthorDTO getRecordById(long authorId) {
+        // Validate id
+        if (!authorRepository.findById(authorId).isPresent()) {
+            return null;
+        }
+
+        AuthorEntity authorEntity = authorRepository.findById(authorId).get();
         return authorConverter.toDTO(authorEntity);
     }
 

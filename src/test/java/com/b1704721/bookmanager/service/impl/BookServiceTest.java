@@ -57,6 +57,32 @@ public class BookServiceTest {
     }
 
     @Test
+    public void testSaveRecord_success() {
+        System.out.println("Running testSaveRecord_success.");
+
+        // Given
+        BookEntity BookEntity = new BookEntity();
+        BookEntity.setId(1L);
+        BookEntity.setTitle("Book Title 1");
+
+        BookDTO expectedBookDTO = new BookDTO();
+        expectedBookDTO.setId(1L);
+        expectedBookDTO.setTitle("Book Title 1");
+
+        Mockito.when(bookConverter.toEntity(Mockito.any())).thenReturn(BookEntity);
+        Mockito.when(bookRepository.save(Mockito.any(BookEntity.class))).thenReturn(BookEntity);
+        Mockito.when(bookConverter.toDTO(Mockito.any())).thenReturn(expectedBookDTO);
+
+        // When
+        BookDTO actualBookDTO = bookService.saveRecord(expectedBookDTO);
+
+        // Then
+        Mockito.verify(bookRepository, Mockito.times(1)).save(BookEntity);
+        Assert.assertEquals(expectedBookDTO.getId(), actualBookDTO.getId());
+        Assert.assertEquals(expectedBookDTO.getTitle(), actualBookDTO.getTitle());
+    }
+
+    @Test
     public void testGetRecordById_success() {
         System.out.println("Running testGetRecordById_success.");
 
@@ -97,32 +123,6 @@ public class BookServiceTest {
         Mockito.verify(bookRepository, Mockito.times(1)).findById(Mockito.anyLong());
 
         Assert.assertNull(actualBookDTO);
-    }
-
-    @Test
-    public void testSaveRecord_success() {
-        System.out.println("Running testSaveRecord_success.");
-
-        // Given
-        BookEntity BookEntity = new BookEntity();
-        BookEntity.setId(1L);
-        BookEntity.setTitle("Book Title 1");
-
-        BookDTO expectedBookDTO = new BookDTO();
-        expectedBookDTO.setId(1L);
-        expectedBookDTO.setTitle("Book Title 1");
-
-        Mockito.when(bookConverter.toEntity(Mockito.any())).thenReturn(BookEntity);
-        Mockito.when(bookRepository.save(Mockito.any(BookEntity.class))).thenReturn(BookEntity);
-        Mockito.when(bookConverter.toDTO(Mockito.any())).thenReturn(expectedBookDTO);
-
-        // When
-        BookDTO actualBookDTO = bookService.saveRecord(expectedBookDTO);
-
-        // Then
-        Mockito.verify(bookRepository, Mockito.times(1)).save(BookEntity);
-        Assert.assertEquals(expectedBookDTO.getId(), actualBookDTO.getId());
-        Assert.assertEquals(expectedBookDTO.getTitle(), actualBookDTO.getTitle());
     }
 
     @Test

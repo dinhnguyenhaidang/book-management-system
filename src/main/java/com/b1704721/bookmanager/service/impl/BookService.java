@@ -45,17 +45,6 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public BookDTO getRecordById(long bookId) {
-        // Validate id
-        if (!bookRepository.findById(bookId).isPresent()) {
-            return null;
-        }
-
-        BookEntity bookEntity = bookRepository.findById(bookId).get();
-        return bookConverter.toDTO(bookEntity);
-    }
-
-    @Override
     public BookDTO saveRecord(BookDTO bookDTO) {
         // Convert bookDTO to bookEntity
         BookEntity bookEntity = bookConverter.toEntity(bookDTO);
@@ -71,6 +60,17 @@ public class BookService implements IBookService {
         // Save the entity
         bookEntity = bookRepository.save(bookEntity);
 
+        return bookConverter.toDTO(bookEntity);
+    }
+
+    @Override
+    public BookDTO getRecordById(long bookId) {
+        // Validate id
+        if (!bookRepository.findById(bookId).isPresent()) {
+            return null;
+        }
+
+        BookEntity bookEntity = bookRepository.findById(bookId).get();
         return bookConverter.toDTO(bookEntity);
     }
 

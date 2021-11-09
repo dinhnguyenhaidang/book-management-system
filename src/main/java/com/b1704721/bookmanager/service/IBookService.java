@@ -11,9 +11,9 @@ import com.b1704721.bookmanager.dto.BookDTO;
  */
 public interface IBookService {
 
-    BookDTO getRecordById(long bookId);
-
     BookDTO saveRecord(BookDTO bookDTO);
+
+    BookDTO getRecordById(long bookId);
 
     BookDTO updateRecord(BookDTO bookDTO);
 
