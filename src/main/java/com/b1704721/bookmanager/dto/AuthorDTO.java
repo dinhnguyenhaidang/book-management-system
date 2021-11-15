@@ -14,6 +14,15 @@ public class AuthorDTO extends AbstractDTO {
     private String name;
     private List<Long> bookIds;
 
+    public AuthorDTO() {
+    }
+
+    public AuthorDTO(Long id, String name, List<Long> bookIds) {
+        this.setId(id);
+        this.name = name;
+        this.bookIds = bookIds;
+    }
+
     public String getName() {
         return name;
     }
