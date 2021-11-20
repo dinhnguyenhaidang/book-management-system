@@ -10,9 +10,9 @@
         <relativePath/>
     </parent>
     <groupId>com.b1704721</groupId>
-    <artifactId>bookmanager</artifactId>
+    <artifactId>bookmanagementsystem</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>BookManager</name>
+    <name>BookManagementSystem</name>
     <description>REST API for testing</description>
     <properties>
         <java.version>1.8</java.version>
