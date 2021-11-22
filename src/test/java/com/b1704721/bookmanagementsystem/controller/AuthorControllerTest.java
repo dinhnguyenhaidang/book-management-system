@@ -74,8 +74,8 @@ public class AuthorControllerTest extends AbstractControllerTest {
         Mockito.when(authorService.saveRecord(Mockito.any())).thenReturn(expectedAuthorDTO);
 
         // When
-        String uri = "/authors";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_VALUE)
+        String endpoint = "/authors";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post(endpoint).contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(inputJson);
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
@@ -114,8 +114,8 @@ public class AuthorControllerTest extends AbstractControllerTest {
         Mockito.when(authorService.getRecordById(Mockito.anyLong())).thenReturn(expectedAuthorDTO);
 
         // When
-        String uri = "/authors/1";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON_VALUE);
+        String endpoint = "/authors/1";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(endpoint).accept(MediaType.APPLICATION_JSON_VALUE);
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
@@ -144,8 +144,8 @@ public class AuthorControllerTest extends AbstractControllerTest {
         // Given
 
         // When
-        String uri = "/authors/0";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(uri).accept(MediaType.APPLICATION_JSON_VALUE);
+        String endpoint = "/authors/0";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.get(endpoint).accept(MediaType.APPLICATION_JSON_VALUE);
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
@@ -186,8 +186,8 @@ public class AuthorControllerTest extends AbstractControllerTest {
         Mockito.when(authorService.updateRecord(Mockito.any())).thenReturn(expectedAuthorDTO);
 
         // When
-        String uri = "/authors";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put(uri).contentType(MediaType.APPLICATION_JSON_VALUE)
+        String endpoint = "/authors";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put(endpoint).contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(inputJson);
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
@@ -221,8 +221,8 @@ public class AuthorControllerTest extends AbstractControllerTest {
         String inputJson = super.mapToJson(inputAuthorDTO);
 
         // When
-        String uri = "/authors";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.put(uri).contentType(MediaType.APPLICATION_JSON_VALUE)
+        String endpoint = "/authors";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.put(endpoint).contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(inputJson);
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
@@ -252,8 +252,8 @@ public class AuthorControllerTest extends AbstractControllerTest {
         Mockito.doNothing().when(authorService).deleteRecordById(Mockito.anyLong());
 
         // When
-        String uri = "/authors/1";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(uri).accept(MediaType.APPLICATION_JSON_VALUE);
+        String endpoint = "/authors/1";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(endpoint).accept(MediaType.APPLICATION_JSON_VALUE);
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
@@ -277,8 +277,8 @@ public class AuthorControllerTest extends AbstractControllerTest {
         // Given
 
         // When
-        String uri = "/authors/0";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(uri).accept(MediaType.APPLICATION_JSON_VALUE);
+        String endpoint = "/authors/0";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(endpoint).accept(MediaType.APPLICATION_JSON_VALUE);
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then

@@ -79,8 +79,8 @@ public class SmokeTest extends AbstractControllerTest {
         Mockito.when(bookService.saveRecord(Mockito.any())).thenReturn(expectedBookDTO);
 
         // When
-        String uri = "/books";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_VALUE)
+        String endpoint = "/books";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post(endpoint).contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(inputJson);
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
@@ -127,8 +127,8 @@ public class SmokeTest extends AbstractControllerTest {
         Mockito.when(authorService.saveRecord(Mockito.any())).thenReturn(expectedAuthorDTO);
 
         // When
-        String uri = "/authors";
-        RequestBuilder requestBuilder = MockMvcRequestBuilders.post(uri).contentType(MediaType.APPLICATION_JSON_VALUE)
+        String endpoint = "/authors";
+        RequestBuilder requestBuilder = MockMvcRequestBuilders.post(endpoint).contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(inputJson);
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
