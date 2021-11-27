@@ -73,10 +73,11 @@ public class BookControllerTest extends AbstractControllerTest {
 
         Mockito.when(bookService.saveRecord(Mockito.any())).thenReturn(expectedBookDTO);
 
-        // When
         String endpoint = "/books";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post(endpoint).contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(inputJson);
+
+        // When
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
@@ -113,9 +114,10 @@ public class BookControllerTest extends AbstractControllerTest {
 
         Mockito.when(bookService.getRecordById(Mockito.anyLong())).thenReturn(expectedBookDTO);
 
-        // When
         String endpoint = "/books/1";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(endpoint).accept(MediaType.APPLICATION_JSON_VALUE);
+
+        // When
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
@@ -142,10 +144,10 @@ public class BookControllerTest extends AbstractControllerTest {
         System.out.println("Testing getBookById_invalidId.");
 
         // Given
-
-        // When
         String endpoint = "/books/0";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(endpoint).accept(MediaType.APPLICATION_JSON_VALUE);
+
+        // When
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
@@ -185,10 +187,11 @@ public class BookControllerTest extends AbstractControllerTest {
 
         Mockito.when(bookService.updateRecord(Mockito.any())).thenReturn(expectedBookDTO);
 
-        // When
         String endpoint = "/books";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.put(endpoint).contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(inputJson);
+
+        // When
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
@@ -220,10 +223,11 @@ public class BookControllerTest extends AbstractControllerTest {
         inputBookDTO.setTitle("Updated Book Title 0");
         String inputJson = super.mapToJson(inputBookDTO);
 
-        // When
         String endpoint = "/books";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.put(endpoint).contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(inputJson);
+
+        // When
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
@@ -251,9 +255,10 @@ public class BookControllerTest extends AbstractControllerTest {
         Mockito.when(bookService.getRecordById(Mockito.anyLong())).thenReturn(expectedBookDTO);
         Mockito.doNothing().when(bookService).deleteRecordById(Mockito.anyLong());
 
-        // When
         String endpoint = "/books/1";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(endpoint).accept(MediaType.APPLICATION_JSON_VALUE);
+
+        // When
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
@@ -275,10 +280,10 @@ public class BookControllerTest extends AbstractControllerTest {
         System.out.println("Testing deleteBook_invalidId.");
 
         // Given
-
-        // When
         String endpoint = "/books/0";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(endpoint).accept(MediaType.APPLICATION_JSON_VALUE);
+
+        // When
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then

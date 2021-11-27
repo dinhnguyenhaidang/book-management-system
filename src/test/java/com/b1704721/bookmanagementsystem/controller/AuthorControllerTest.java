@@ -73,10 +73,11 @@ public class AuthorControllerTest extends AbstractControllerTest {
 
         Mockito.when(authorService.saveRecord(Mockito.any())).thenReturn(expectedAuthorDTO);
 
-        // When
         String endpoint = "/authors";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.post(endpoint).contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(inputJson);
+
+        // When
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
@@ -113,9 +114,10 @@ public class AuthorControllerTest extends AbstractControllerTest {
 
         Mockito.when(authorService.getRecordById(Mockito.anyLong())).thenReturn(expectedAuthorDTO);
 
-        // When
         String endpoint = "/authors/1";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(endpoint).accept(MediaType.APPLICATION_JSON_VALUE);
+
+        // When
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
@@ -142,10 +144,10 @@ public class AuthorControllerTest extends AbstractControllerTest {
         System.out.println("Testing getAuthorById_invalidId.");
 
         // Given
-
-        // When
         String endpoint = "/authors/0";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.get(endpoint).accept(MediaType.APPLICATION_JSON_VALUE);
+
+        // When
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
@@ -185,10 +187,11 @@ public class AuthorControllerTest extends AbstractControllerTest {
 
         Mockito.when(authorService.updateRecord(Mockito.any())).thenReturn(expectedAuthorDTO);
 
-        // When
         String endpoint = "/authors";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.put(endpoint).contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(inputJson);
+
+        // When
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
@@ -220,10 +223,11 @@ public class AuthorControllerTest extends AbstractControllerTest {
         inputAuthorDTO.setName("Updated Author Name 0");
         String inputJson = super.mapToJson(inputAuthorDTO);
 
-        // When
         String endpoint = "/authors";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.put(endpoint).contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(inputJson);
+
+        // When
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
@@ -251,9 +255,10 @@ public class AuthorControllerTest extends AbstractControllerTest {
         Mockito.when(authorService.getRecordById(Mockito.anyLong())).thenReturn(expectedAuthorDTO);
         Mockito.doNothing().when(authorService).deleteRecordById(Mockito.anyLong());
 
-        // When
         String endpoint = "/authors/1";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(endpoint).accept(MediaType.APPLICATION_JSON_VALUE);
+
+        // When
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
@@ -275,10 +280,10 @@ public class AuthorControllerTest extends AbstractControllerTest {
         System.out.println("Testing deleteAuthor_invalidId.");
 
         // Given
-
-        // When
         String endpoint = "/authors/0";
         RequestBuilder requestBuilder = MockMvcRequestBuilders.delete(endpoint).accept(MediaType.APPLICATION_JSON_VALUE);
+
+        // When
         MvcResult mvcResult = mvc.perform(requestBuilder).andReturn();
 
         // Then
