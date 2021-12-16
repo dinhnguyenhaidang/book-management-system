@@ -1,9 +1,6 @@
 package com.b1704721.bookmanagementsystem.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +18,7 @@ public class AuthorEntity extends AbstractEntity {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authors")
     private List<BookEntity> books = new ArrayList<>();
 
     public String getName() {
