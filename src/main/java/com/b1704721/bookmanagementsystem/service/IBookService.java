@@ -3,7 +3,7 @@ package com.b1704721.bookmanagementsystem.service;
 import com.b1704721.bookmanagementsystem.dto.BookDTO;
 
 /**
- * Provides services related to book and follows template for Data Injection
+ * Provides services related to book and follows template for Dependency Injection
  *
  * @author B1704721
  * @version 1.1
