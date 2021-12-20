@@ -18,7 +18,7 @@ public class BookEntity extends AbstractEntity {
     @Column(name = "title")
     private String title;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<AuthorEntity> authors = new ArrayList<>();

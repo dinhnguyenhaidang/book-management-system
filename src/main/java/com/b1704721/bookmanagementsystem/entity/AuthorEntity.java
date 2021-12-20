@@ -18,7 +18,7 @@ public class AuthorEntity extends AbstractEntity {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.REFRESH}, mappedBy = "authors")
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "authors")
     private List<BookEntity> books = new ArrayList<>();
 
     public String getName() {
